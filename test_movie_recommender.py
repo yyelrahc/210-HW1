@@ -1,22 +1,15 @@
-'''
-# Testing Specification
-#     Have the chatbot generate a python program called test_movie_recommender.py to do 
-#     automatic testing. The tester code should be runnable like this:
-#        > python test_movie_recommender.py
-#     It should load input files, call each function, and print the result. This is quicker 
-#     than manually running the original program and individually testing each menu option.
-#     Compare printed results against expected values so you know the code is correct. 
-'''
 """
 test_movie_recommender.py
 
 Automatic tester for movie_recommender.py
 
-Loads input files, calls each function, and validates results
-using data-independent assertions (structure, ordering, types, edge cases).
+This script validates movie recommender functions by checking data types, 
+sorting orders, and edge cases. 
 
-Run with:
-    > python test_movie_recommender.py <movies_file> <ratings_file>
+Usage:
+    1. Command Line: python test_movie_recommender.py <movies_file> <ratings_file>
+    2. Interactive:  python test_movie_recommender.py 
+       (Script will prompt for filenames or use defaults if Enter is pressed)
 """
 
 import os
@@ -48,10 +41,17 @@ def load_data():
         movies_file = sys.argv[1]
         ratings_file = sys.argv[2]
     else:
-        movies_file = "sample_movies.txt"
-        ratings_file = "sample_ratings.txt"
-        print(f"  No files specified — using defaults: '{movies_file}', '{ratings_file}'")
-        print(f"  Usage: python test_movie_recommender.py <movies_file> <ratings_file>")
+        # No arguments, ask the user to type the name and assign values or defaults.
+        print("No filenames provided in command line.\n")
+        m_input = input("Enter movies file (Default: 'genreMovieSample.txt'): ").strip()
+        movies_file = m_input if m_input else "genreMovieSample.txt"
+        if not m_input:
+            print(f"  -> Using default: {movies_file}\n")
+
+        r_input = input("Enter ratings file (Default: 'movieRatingSample.txt'): ").strip()
+        ratings_file = r_input if r_input else "movieRatingSample.txt"
+        if not r_input:
+            print(f"  -> Using default: {ratings_file}\n")
 
     if not os.path.exists(movies_file):
         print(f"ERROR: '{movies_file}' not found.")
@@ -518,6 +518,7 @@ def test_recommend_movies(movies, ratings, user_ratings):
 
 def run_tests():
     movies, ratings, user_ratings, popularity = load_data()
+    
 
     test_load_movies(movies)
     test_load_ratings(ratings, user_ratings)
@@ -533,6 +534,7 @@ def run_tests():
     print("\n" + "=" * 50)
     print("All tests completed.")
     print("=" * 50)
+    input("\nTests finished. Press Enter to exit...")
 
 
 if __name__ == "__main__":

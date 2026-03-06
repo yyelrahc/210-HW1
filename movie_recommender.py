@@ -452,7 +452,10 @@ def menu():
         choice = input("Enter choice: ").strip()
 
         if choice == "1":
-            filename = input("Enter movies filename: ").strip()
+            filename = input("Enter movies filename (Default: 'genreMovieSample.txt'): ").strip()
+            if not filename:
+                print(f"  -> Using default: genreMovieSample.txt")
+                filename = "genreMovieSample.txt"
             movies = load_movies(filename)
             if movies:
                 print(f"Loaded {len(movies)} movies.")
@@ -462,7 +465,10 @@ def menu():
                 print("No movies loaded.")
 
         elif choice == "2":
-            filename = input("Enter ratings filename: ").strip()
+            filename = input("Enter ratings filename (Default: 'movieRatingSample.txt'): ").strip()
+            if not filename:
+                print(f"  -> Using default: movieRatingSample.txt")
+                filename = "movieRatingSample.txt"
             ratings, user_ratings = load_ratings(filename)
             if ratings:
                 print(f"Loaded ratings for {len(ratings)} movies.")
